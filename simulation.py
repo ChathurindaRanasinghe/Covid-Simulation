@@ -60,13 +60,14 @@ class Simulation:
 
     def save_data(self):
         days = [i for i in range(0, self.day + 1)]
-        print(len(days))
-        print(len(self.dailyInfected))
-        print(len(self.totalFatalities))
-        print(len(self.totalHospitalizedPatient))
-        print(len(self.recoveredPeopleCount))
-        dt = {'DailyInfectedPatients': self.dailyInfected, 'TotalFatalities': self.totalFatalities,
+        #print(len(days))
+        #print(len(self.dailyInfected))
+        #print(len(self.totalFatalities))
+        #print(len(self.totalHospitalizedPatient))
+        #print(len(self.recoveredPeopleCount))
+        dt = { 'DailyInfectedPatients': self.dailyInfected, 'TotalFatalities': self.totalFatalities,
               'TotalHospitalized':
                   self.totalHospitalizedPatient, 'RecoveredPeople': self.recoveredPeopleCount}
         data = pd.DataFrame(data=dt)
-        data.to_csv('data.csv')
+        #data.to_csv('data.csv')
+        return data
