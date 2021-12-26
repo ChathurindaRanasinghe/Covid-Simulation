@@ -1,8 +1,6 @@
 from simulation import Simulation
 import pandas as pd
 import streamlit as st
-import pandas as pd
-
 
 sim = Simulation()
 sim.run(70)
