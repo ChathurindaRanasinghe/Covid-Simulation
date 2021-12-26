@@ -2,7 +2,6 @@ from person import Person
 from family import Family
 import random
 
-
 class Population:
     def __init__(self):
         self.people = []
@@ -15,51 +14,51 @@ class Population:
         self.essentialServiceCount = 4000
 
         for i in range(100000):
-            new_person = Person()
-            new_person_age = getattr(new_person, 'age')
-            new_person_id = getattr(new_person, 'id')
-            if new_person_age >= 65:
+            newPerson = Person()
+            newPersonAge = getattr(newPerson,'age')
+            newPersonId = getattr(newPerson,'id')
+            if newPersonAge >= 65:
                 self.adultCount += 1
-                self.adults.append(new_person_id)
-            elif new_person_age <= 18:
+                self.adults.append(newPersonId)
+            elif newPersonAge <= 18:
                 self.childCount += 1
-                self.children.append(new_person_id)
+                self.children.append(newPersonId)
             else:
-                essential_prob = random.randint(1, 100)
-                if 1 <= essential_prob <= 9 and self.essentialServiceCount != 0:
-                    setattr(new_person, 'isEssentialService', True)
+                essentialProb = random.randint(1,100)
+                if 1 <= essentialProb <= 9 and self.essentialServiceCount != 0:
+                    setattr(newPerson,'isEssentialService',True)
                     self.essentialServiceCount -= 1
                 self.manCount += 1
-                self.adults.append(new_person_id)
-            self.people.append(new_person)
-
-        self.create_families()
-
-    def create_families(self):
+                self.adults.append(newPersonId)
+            self.people.append(newPerson)
+        
+        self.createFamilies()
+    
+    def createFamilies(self):
         random.shuffle(self.adults)
         random.shuffle(self.children)
-        children_in_families_count = 0
+        childrenInFamiliesCount = 0
         # availablePeople = [i for i in range(1000000)]
-        for i in range(10000):
+        for i in range (10000):
             # print(f"No of People {len(self._people)}")
-            new_family = Family()
-            no_members = new_family.memberCount
-            new_family_id = new_family.id
+            newFamily = Family()
+            noMembers = newFamily.memberCount
+            newFamilyId = newFamily.id
 
-            adult_id = self.adults.pop()
-            self.people[adult_id].add_to_a_family(new_family_id)
+            adultId = self.adults.pop()
+            self.people[adultId].addToAFamily(newFamilyId)
 
-            no_members -= 1
+            noMembers -= 1
 
-            for j in range(no_members):
-                random_no = random.randint(0, 99)
-                if random_no <= 50 and len(self.children) != 0:
-                    child_id = self.children.pop()
-                    self.people[child_id].add_to_a_family(new_family_id)
-                    children_in_families_count += 1
+            for j in range (noMembers):
+                randomNo = random.randint(0,99)
+                if randomNo <= 50 and len(self.children) != 0:
+                    childId = self.children.pop()
+                    self.people[childId].addToAFamily(newFamilyId)
+                    childrenInFamiliesCount += 1
                 else:
-                    adult_id = self.adults.pop()
-                    self.people[adult_id].add_to_a_family(new_family_id)
+                    adultId = self.adults.pop()
+                    self.people[adultId].addToAFamily(newFamilyId)
 
             # for j in range (noMembers):
             #     rndomIndex = random.randint(0,len(availablePeople)-1)
@@ -67,7 +66,7 @@ class Population:
             #     # print(f"familyMemberId {familyMemberId}")
             #     self._people[familyMemberId].addToAFamily(i)
             #     newFamily.addAMember(familyMemberId)
-            self.families.append(new_family)
-        print(f"children in families = {children_in_families_count}")
+            self.families.append(newFamily)
+        print(f"children in families = {childrenInFamiliesCount}")
 
 

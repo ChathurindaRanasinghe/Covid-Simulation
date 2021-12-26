@@ -5,6 +5,9 @@ class Person:
     new_id = 0
 
     def __init__(self):
+
+        # self._age =
+
         age_prob = random.randint(1, 100)
         if 1 <= age_prob <= 31:
             self.age = random.randint(65, 90)
@@ -27,60 +30,45 @@ class Person:
         self.fatalDay = -1
         self.infectedDay = -1
         self.isHospitalized = False
-        self.hospitalizedDay = -1
         self.isRecovered = False
-        self.recoveredDay = -1
 
     def add_to_a_family(self, family_id):
         self.isInAFamily = True
         self.familyId = family_id
 
-    def calculate_infection_probability(self, day, wear_mask, travel_restrictions,total_count,family_status):
-        self.infectionProbability = 0
+    def calculate_infection_probability(self, day, wear_mask, travel_restrictions):
+        probability = 0
         if self.isRecovered is False and self.isHospitalized is False and self.isFatal is False \
                 and self.isInfected is False:
+            isTravelRestrict = False
+            wearingMaskChance = (random.randint(5, 10)) / 100
             if self.age <= 18:
-                self.infectionProbability = random.randint(10, 20)/100
+                if isTravelRestrict is True:
+                    finalChildChance = 20/100
+                else:
+                    childChance = (random.randint(10, 20))/100
+                    finalChildChance = childChance * wearingMaskChance
             elif self.age < 65:
-                self.infectionProbability = random.randint(15, 40)/100
+                if isTravelRestrict is True:
+                    finalAdultChance = 20/100
+                else:
+                    adultChance = (random.randint(15, 40)) / 100
+                    finalAdultChance = adultChance * wearingMaskChance
             else:
-                self.infectionProbability = random.randint(35, 60)/100
-            if self.isEssentialService is True:
-                self.infectionProbability *= random.randint(30, 40)/100
-            if self.isEssentialService is False and travel_restrictions is True:
-                self.infectionProbability -= random.randint(20, 30)/100
-            if wear_mask is True:
-                self.infectionProbability -= random.randint(5, 10)/100
-            if family_status is True:
-                self.infectionProbability *= random.randint(40, 80) / 100
+                if isTravelRestrict is True:
+                    finalSeniorChance = 20/100
+                else:
+                    seniorChance = (random.randint(35, 60)) / 100
+                    finalSeniorChance = seniorChance * wearingMaskChance
 
-            if total_count < 1000:
-                self.infectionProbability *= 2 / 100
-            elif 1000 <= total_count < 10000:
-                self.infectionProbability *= 5/100
-            elif 10000 <= total_count < 20000:
-                self.infectionProbability *= 10 / 100
-            else:
-                self.infectionProbability *= 15 / 100
-
-            # print(f"Prob = {self.infectionProbability * 100}")
+        self.infectionProbability = probability
 
     def update_state(self, day):
-        days_after_infection = day - self.infectedDay
         if self.isInfected and self.isRecovered is False and self.isFatal is False:
-            if 5 < days_after_infection < 15 and random.randint(0, 1) == 1 and self.isHospitalized is False:
+            days_after_infection = day - self.infectedDay
+            if days_after_infection == 5:
                 self.isHospitalized = True
-                self.hospitalizedDay = day
             elif days_after_infection == 15:
                 self.isHospitalized = False
                 self.isRecovered = True
-                self.recoveredDay = day
                 self.infectedDay = -1
-                self.hospitalizedDay = -1
-
-        if self.isInfected is False and self.isRecovered is False:
-            random_infection = random.randint(1, 100)
-            if random_infection <= self.infectionProbability * 100 and self.infectionProbability != 0:
-                self.isInfected = True
-                self.infectedDay = day
-
