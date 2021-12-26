@@ -68,6 +68,6 @@ class Population:
             #     self._people[familyMemberId].addToAFamily(i)
             #     newFamily.addAMember(familyMemberId)
             self.families.append(new_family)
-        print(f"children in families = {children_in_families_count}")
+        #print(f"children in families = {children_in_families_count}")
 
 

@@ -19,6 +19,27 @@ class Simulation:
         self.recoveredPeopleCount = []
         self.isWearAMask = False
         self.isTravelRestrictions = False
+        self.wearAMaskStartdate = 0
+        self.wearAMaskEndtdate = 0
+        self.travelReStart = 0
+        self.travelReEnd = 0
+
+
+    def input(self):
+        x = input("Press 1 if you wants to apply wear mask law in a time period: ")
+        y = input("Press 1 if you wants to apply travel restrictions in a time period: ")
+        if x=='1':
+            self.wearAMaskStartdate = input("Enter the start date of wearing mask law that you need to apply: ")
+            self.wearAMaskEndtdate = input("Enter the end date of wearing mask law that you need to apply:")
+
+        else:
+            pass
+
+        if y=='1':
+            self.travelReStart = input("Enter the start date of travel restrictions that you need to apply:")
+            self.travelReEnd = input("Enter the end date of travel restrictions that you need to apply:")
+        else:
+            pass
 
     def run(self, days):
         random_person = random.randint(0, 99999)
@@ -30,12 +51,14 @@ class Simulation:
             daily_infected_patient_count = 0
             if self.day == 0:
                 daily_infected_patient_count = 1
-            # wear_mask_input = input("Enforce wear masks (Y/N): ")
-            # if wear_mask_input == 'Y':
-            #     self.isWearAMask = True
-            # travel_restrictions = input('Enforce travel restrictions (Y/N): ')
-            # if travel_restrictions == "Y":
-            #     self.isTravelRestrictions = True
+            
+            if self.wearAMaskStartdate <= self.day <= self.wearAMaskEndtdate :
+                self.isWearAMask = True
+            else: self.isWearAMask = False
+            
+            if self.travelReStart <= self.day <= self.travelReEnd :
+                self.isTravelRestrictions = True
+            else: self.isTravelRestrictions = False
 
             for person in self.population.people:
                 family_status = False
@@ -65,17 +88,18 @@ class Simulation:
             self.totalFatalities.append(self.fatalitiesCount)
             self.recoveredPeopleCount.append(self.recoveredPatientCount)
 
-            print(f'\nDay = {self.day}')
-            print(f'Daily infected Count  = {daily_infected_patient_count}')
-            print(f'Total hospitalized patient count  = {self.hospitalizedPatientCount}')
-            print(f'Total fatalities count = {self.fatalitiesCount}')
-            print(f'Total recovered patient count = {self.recoveredPatientCount}')
+            #print(f'\nDay = {self.day}')
+            #print(f'Daily infected Count  = {daily_infected_patient_count}')
+            #print(f'Total hospitalized patient count  = {self.hospitalizedPatientCount}')
+            #print(f'Total fatalities count = {self.fatalitiesCount}')
+            #print(f'Total recovered patient count = {self.recoveredPatientCount}')
 
 
     def save_data(self):
-        # days = [i for i in range(0, self.day + 1)]
-        dt = {'DailyInfectedPatients': self.dailyInfected, 'TotalFatalities': self.totalFatalities,
+        days = [i for i in range(0, self.day + 1)]
+        dt = {'Day':days, 'DailyInfectedPatients': self.dailyInfected, 'TotalFatalities': self.totalFatalities,
               'TotalHospitalized':
                   self.totalHospitalizedPatient, 'RecoveredPeople': self.recoveredPeopleCount}
         data = pd.DataFrame(data=dt)
-        data.to_csv('data.csv')
+        #data.to_csv('data.csv')
+        return data
