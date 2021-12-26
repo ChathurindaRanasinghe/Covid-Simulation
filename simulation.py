@@ -27,17 +27,19 @@ class Simulation:
 
     def input(self):
         x = input("Press 1 if you wants to apply wear mask law in a time period: ")
-        y = input("Press 1 if you wants to apply travel restrictions in a time period: ")
         if x=='1':
-            self.wearAMaskStartdate = input("Enter the start date of wearing mask law that you need to apply: ")
-            self.wearAMaskEndtdate = input("Enter the end date of wearing mask law that you need to apply:")
-
+            print()
+            self.wearAMaskStartdate = int(input("Enter the start date of wearing mask law that you need to apply: "))
+            self.wearAMaskEndtdate = int(input("Enter the end date of wearing mask law that you need to apply:"))
         else:
             pass
-
+        
+        print()
+        y = input("Press 1 if you wants to apply travel restrictions in a time period: ")
         if y=='1':
-            self.travelReStart = input("Enter the start date of travel restrictions that you need to apply:")
-            self.travelReEnd = input("Enter the end date of travel restrictions that you need to apply:")
+            print()
+            self.travelReStart = int(input("Enter the start date of travel restrictions that you need to apply:"))
+            self.travelReEnd = int(input("Enter the end date of travel restrictions that you need to apply:"))
         else:
             pass
 
